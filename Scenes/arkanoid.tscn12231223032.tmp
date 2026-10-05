@@ -1,0 +1,140 @@
+[gd_scene format=3 uid="uid://b3y84sswfbvh2"]
+
+[ext_resource type="Script" uid="uid://dbrauh3hgw446" path="res://Scripts/paddle.gd" id="1_e3c5b"]
+[ext_resource type="Script" uid="uid://cfb0j5gaycctj" path="res://Scripts/ball.gd" id="2_01gq6"]
+[ext_resource type="Texture2D" uid="uid://bbgafget20hbj" path="res://Assets/bear.png" id="2_5y7lg"]
+[ext_resource type="Texture2D" uid="uid://bclqj0wbh71rr" path="res://Assets/ball.png" id="3_3dowy"]
+[ext_resource type="Script" uid="uid://d0uc87shu6b8w" path="res://Scripts/level.gd" id="3_ubs8n"]
+[ext_resource type="PackedScene" uid="uid://cb0t4oxvxhdf5" path="res://Scenes/NormalBrick.tscn" id="4_2se6l"]
+[ext_resource type="PackedScene" uid="uid://djsp6vw4iccjg" path="res://Scenes/MediumBrick.tscn" id="7_eitq0"]
+[ext_resource type="PackedScene" uid="uid://polre3xwjht4" path="res://Scenes/HardBrick.tscn" id="8_8kbsk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_guh18"]
+size = Vector2(120, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_djfhu"]
+size = Vector2(960, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nccni"]
+size = Vector2(20, 540)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6l4ap"]
+size = Vector2(20, 540)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_guh18"]
+radius = 8.0
+
+[node name="Arkanoid" type="Node2D" unique_id=1074859914]
+
+[node name="Paddle" type="CharacterBody2D" parent="." unique_id=1818522318]
+position = Vector2(480, 490)
+script = ExtResource("1_e3c5b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle" unique_id=1882703488]
+shape = SubResource("RectangleShape2D_guh18")
+
+[node name="Sprite2D" type="Sprite2D" parent="Paddle" unique_id=1332949793]
+position = Vector2(2.0000129, 11.999996)
+scale = Vector2(0.2727838, 0.22520524)
+texture = ExtResource("2_5y7lg")
+
+[node name="Walls" type="Node2D" parent="." unique_id=699596688]
+
+[node name="Top" type="StaticBody2D" parent="Walls" unique_id=1681111755]
+position = Vector2(480, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Top" unique_id=591146945]
+shape = SubResource("RectangleShape2D_djfhu")
+
+[node name="Left" type="StaticBody2D" parent="Walls" unique_id=1876122777]
+position = Vector2(10, 270)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left" unique_id=674377675]
+shape = SubResource("RectangleShape2D_nccni")
+
+[node name="Right" type="StaticBody2D" parent="Walls" unique_id=218471002]
+position = Vector2(950, 270)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right" unique_id=1853430737]
+shape = SubResource("RectangleShape2D_6l4ap")
+
+[node name="Ball" type="CharacterBody2D" parent="." unique_id=1347679701]
+position = Vector2(480, 540)
+scale = Vector2(2, 2)
+script = ExtResource("2_01gq6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=1370062926]
+shape = SubResource("CircleShape2D_guh18")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball" unique_id=523087755]
+position = Vector2(3.0517578e-05, 0)
+scale = Vector2(0.036613304, 0.036613222)
+texture = ExtResource("3_3dowy")
+
+[node name="Level" type="Node2D" parent="." unique_id=1968133762 node_paths=PackedStringArray("score_label", "lives_label", "final_score_label", "game_over_panel")]
+script = ExtResource("3_ubs8n")
+normal_brick_scene = ExtResource("4_2se6l")
+medium_brick_scene = ExtResource("7_eitq0")
+hard_brick_scene = ExtResource("8_8kbsk")
+score_label = NodePath("../UI/ScoreLabel")
+lives_label = NodePath("../UI/LivesLabel")
+final_score_label = NodePath("../UI/GameOverPanel/VBoxContainer/FinalScoreLabel")
+game_over_panel = NodePath("../UI/GameOverPanel")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=2134908235]
+
+[node name="ScoreLabel" type="Label" parent="UI" unique_id=254017388]
+offset_left = 30.0
+offset_top = 20.0
+offset_right = 99.0
+offset_bottom = 43.0
+theme_override_font_sizes/font_size = 24
+text = "SCORE: 0"
+
+[node name="LivesLabel" type="Label" parent="UI" unique_id=735886106]
+offset_left = 820.0
+offset_top = 20.0
+offset_right = 879.0
+offset_bottom = 43.0
+theme_override_font_sizes/font_size = 24
+text = "LIVES: 3"
+
+[node name="GameOverPanel" type="Panel" parent="UI" unique_id=529794973]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -110.0
+offset_right = 175.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/GameOverPanel" unique_id=611106556]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="UI/GameOverPanel/VBoxContainer" unique_id=275808741]
+layout_mode = 2
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="FinalScoreLabel" type="Label" parent="UI/GameOverPanel/VBoxContainer" unique_id=1083561388]
+layout_mode = 2
+text = "SCORE: 0"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="UI/GameOverPanel/VBoxContainer" unique_id=70309281]
+layout_mode = 2
+text = "RESTART"
+
+[connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/RestartButton" to="Level" method="_on_restart_button_pressed"]

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://polre3xwjht4"]
+
+[ext_resource type="Script" uid="uid://dbuavy53lp3cl" path="res://Scripts/brick.gd" id="1_qwbei"]
+[ext_resource type="Texture2D" uid="uid://bi0myobf0ta3v" path="res://Assets/Hard Medium hp.png" id="2_kfhw2"]
+[ext_resource type="Texture2D" uid="uid://c1pgpbnun1po7" path="res://Assets/Hard Low hp.png" id="3_il8cb"]
+[ext_resource type="Texture2D" uid="uid://cg5miefqyyr1p" path="res://Assets/Hard Block.png" id="4_0umj0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pn5wc"]
+size = Vector2(70, 20)
+
+[node name="Brick" type="StaticBody2D" unique_id=1556933038 groups=["brick"]]
+script = ExtResource("1_qwbei")
+hit_points = 3
+score_value = 250
+damaged_texture = ExtResource("2_kfhw2")
+heavily_damaged_texture = ExtResource("3_il8cb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1931134192]
+shape = SubResource("RectangleShape2D_pn5wc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=98275679]
+position = Vector2(1.1920929e-07, 0)
+scale = Vector2(0.016203703, 0.020833332)
+texture = ExtResource("4_0umj0")
