@@ -89,7 +89,7 @@ offset_top = 20.0
 offset_right = 99.0
 offset_bottom = 43.0
 theme_override_font_sizes/font_size = 24
-text = "SCORE: 0"
+text = "PUNTAJE: 0"
 
 [node name="LivesLabel" type="Label" parent="UI" unique_id=735886106]
 offset_left = 820.0
@@ -97,7 +97,7 @@ offset_top = 20.0
 offset_right = 879.0
 offset_bottom = 43.0
 theme_override_font_sizes/font_size = 24
-text = "LIVES: 3"
+text = "VIDAS: 3"
 
 [node name="GameOverPanel" type="Panel" parent="UI" unique_id=529794973]
 visible = false
@@ -130,11 +130,11 @@ horizontal_alignment = 1
 
 [node name="FinalScoreLabel" type="Label" parent="UI/GameOverPanel/VBoxContainer" unique_id=1083561388]
 layout_mode = 2
-text = "SCORE: 0"
+text = "PUNTAJE: 0"
 horizontal_alignment = 1
 
 [node name="RestartButton" type="Button" parent="UI/GameOverPanel/VBoxContainer" unique_id=70309281]
 layout_mode = 2
-text = "RESTART"
+text = "REINICIAR"
 
 [connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/RestartButton" to="Level" method="_on_restart_button_pressed"]

@@ -41,12 +41,12 @@ func _ready() -> void:
 
 func update_score_display() -> void:
 	if score_label:
-		score_label.text = "SCORE: " + str(score)
+		score_label.text = "PUNTAJE: " + str(score)
 
 
 func update_lives_display() -> void:
 	if lives_label:
-		lives_label.text = "LIVES: " + str(lives)
+		lives_label.text = "VIDAS: " + str(lives)
 
 
 func create_bricks() -> void:
@@ -132,7 +132,7 @@ func game_over() -> void:
 	print("GAME OVER!")
 
 	if final_score_label:
-		final_score_label.text = "SCORE: " + str(score)
+		final_score_label.text = "PUNTAJE: " + str(score)
 
 	if game_over_panel:
 		game_over_panel.visible = true
