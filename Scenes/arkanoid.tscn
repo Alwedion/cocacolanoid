@@ -4,10 +4,12 @@
 [ext_resource type="Script" uid="uid://cfb0j5gaycctj" path="res://Scripts/ball.gd" id="2_01gq6"]
 [ext_resource type="Texture2D" uid="uid://bbgafget20hbj" path="res://Assets/bear.png" id="2_5y7lg"]
 [ext_resource type="Texture2D" uid="uid://bclqj0wbh71rr" path="res://Assets/ball.png" id="3_3dowy"]
+[ext_resource type="Texture2D" uid="uid://de81gwrexfxty" path="res://Assets/candystick texture thin.png" id="3_hnee1"]
 [ext_resource type="Script" uid="uid://d0uc87shu6b8w" path="res://Scripts/level.gd" id="3_ubs8n"]
 [ext_resource type="PackedScene" uid="uid://cb0t4oxvxhdf5" path="res://Scenes/NormalBrick.tscn" id="4_2se6l"]
 [ext_resource type="PackedScene" uid="uid://djsp6vw4iccjg" path="res://Scenes/MediumBrick.tscn" id="7_eitq0"]
 [ext_resource type="PackedScene" uid="uid://polre3xwjht4" path="res://Scenes/HardBrick.tscn" id="8_8kbsk"]
+[ext_resource type="Texture2D" uid="uid://b73vyy2y6tmji" path="res://Assets/christmas-village-in-the-mountains-8458822_960_720.jpg" id="9_8kbsk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_guh18"]
 size = Vector2(120, 20)
@@ -46,17 +48,29 @@ position = Vector2(480, 10)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Top" unique_id=591146945]
 shape = SubResource("RectangleShape2D_djfhu")
 
+[node name="Sprite2D" type="Sprite2D" parent="Walls/Top" unique_id=1106856901]
+rotation = 1.5707964
+texture = ExtResource("3_hnee1")
+
 [node name="Left" type="StaticBody2D" parent="Walls" unique_id=1876122777]
 position = Vector2(10, 270)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left" unique_id=674377675]
 shape = SubResource("RectangleShape2D_nccni")
 
+[node name="Sprite2D" type="Sprite2D" parent="Walls/Left" unique_id=103057302]
+position = Vector2(0, -138)
+texture = ExtResource("3_hnee1")
+
 [node name="Right" type="StaticBody2D" parent="Walls" unique_id=218471002]
 position = Vector2(950, 270)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right" unique_id=1853430737]
 shape = SubResource("RectangleShape2D_6l4ap")
+
+[node name="Sprite2D" type="Sprite2D" parent="Walls/Right" unique_id=482422705]
+position = Vector2(0, -138)
+texture = ExtResource("3_hnee1")
 
 [node name="Ball" type="CharacterBody2D" parent="." unique_id=1347679701]
 position = Vector2(480, 540)
@@ -136,5 +150,10 @@ horizontal_alignment = 1
 [node name="RestartButton" type="Button" parent="UI/GameOverPanel/VBoxContainer" unique_id=70309281]
 layout_mode = 2
 text = "REINICIAR"
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1966947369]
+z_index = -10
+position = Vector2(480, 270)
+texture = ExtResource("9_8kbsk")
 
 [connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/RestartButton" to="Level" method="_on_restart_button_pressed"]
