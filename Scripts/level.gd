@@ -41,6 +41,14 @@ func _ready() -> void:
 	game_mode = str(
 		get_tree().root.get_meta("game_mode", "two_players")
 	)
+	
+	var top_wall := get_node_or_null("../Walls/Top")
+
+	if top_wall:
+		if game_mode == "single_player":
+			top_wall.position.y = 10.0
+		else:
+			top_wall.position.y = -217.0
 
 	player1_lives = starting_lives
 
@@ -153,8 +161,25 @@ func level_complete() -> void:
 func ball_lost(player_id: int) -> void:
 	if player_id == 1:
 		player1_lives -= 1
-	else:
+	elif player_id == 2:
 		player2_lives -= 1
+
+	update_lives_display()
+
+	print("Player 1 lives: ", player1_lives)
+	print("Player 2 lives: ", player2_lives)
+
+	if game_mode == "single_player":
+		if player1_lives <= 0:
+			game_over(0)
+	else:
+		if player1_lives <= 0 or player2_lives <= 0:
+			if player1_score > player2_score:
+				game_over(1)
+			elif player2_score > player1_score:
+				game_over(2)
+			else:
+				game_over(0)
 
 	update_lives_display()
 
@@ -170,28 +195,37 @@ func ball_lost(player_id: int) -> void:
 			game_over(0)
 
 func game_over(winner_id: int) -> void:
-	if winner_id == 0:
-		print("IT'S A DRAW!")
-	else:
-		print("PLAYER ", winner_id, " WINS!")
+	if game_mode == "single_player":
+		print("GAME OVER!")
 
-	if final_score_label:
+		if final_score_label:
+			final_score_label.text = (
+                "GAME OVER!\n"
+				+ "Final Score: " + str(player1_score)
+			)
+
+	else:
 		if winner_id == 0:
-			final_score_label.text = (
-				"IT'S A DRAW!\n"
-				+ "P1 Score: " + str(player1_score) + "\n"
-				+ "P2 Score: " + str(player2_score)
-			)
+			print("IT'S A DRAW!")
 		else:
-			final_score_label.text = (
-				"PLAYER " + str(winner_id) + " WINS!\n"
-				+ "P1 Score: " + str(player1_score) + "\n"
-				+ "P2 Score: " + str(player2_score)
-			)
+			print("PLAYER ", winner_id, " WINS!")
+
+		if final_score_label:
+			if winner_id == 0:
+				final_score_label.text = (
+                    "IT'S A DRAW!\n"
+					+ "P1 Score: " + str(player1_score) + "\n"
+					+ "P2 Score: " + str(player2_score)
+				)
+			else:
+				final_score_label.text = (
+					"PLAYER " + str(winner_id) + " WINS!\n"
+					+ "P1 Score: " + str(player1_score) + "\n"
+					+ "P2 Score: " + str(player2_score)
+				)
 
 	if game_over_panel:
 		game_over_panel.visible = true
-
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):

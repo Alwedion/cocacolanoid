@@ -29,9 +29,10 @@ radius = 8.0
 [node name="Arkanoid" type="Node2D" unique_id=1074859914]
 
 [node name="Player1Paddle" type="CharacterBody2D" parent="." unique_id=1818522318]
-position = Vector2(480, 490)
+position = Vector2(636, 671)
 collision_layer = 4
 script = ExtResource("1_e3c5b")
+speed = 750.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player1Paddle" unique_id=1882703488]
 shape = SubResource("RectangleShape2D_guh18")
@@ -42,9 +43,10 @@ scale = Vector2(0.2727838, 0.22520524)
 texture = ExtResource("2_5y7lg")
 
 [node name="Player2Paddle" type="CharacterBody2D" parent="." unique_id=841086277]
-position = Vector2(475, 49)
+position = Vector2(636, 54)
 collision_layer = 4
 script = ExtResource("1_e3c5b")
+speed = 750.0
 player_id = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player2Paddle" unique_id=1200410913]
@@ -60,7 +62,8 @@ flip_v = true
 [node name="Walls" type="Node2D" parent="." unique_id=699596688]
 
 [node name="Top" type="StaticBody2D" parent="Walls" unique_id=1681111755]
-position = Vector2(477, -217)
+position = Vector2(557, -217)
+scale = Vector2(1.485, 1.485)
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Top" unique_id=591146945]
@@ -71,7 +74,7 @@ rotation = 1.5707964
 texture = ExtResource("3_hnee1")
 
 [node name="Left" type="StaticBody2D" parent="Walls" unique_id=1876122777]
-position = Vector2(10, 270)
+position = Vector2(10, 389)
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left" unique_id=674377675]
@@ -82,7 +85,7 @@ position = Vector2(0, -138)
 texture = ExtResource("3_hnee1")
 
 [node name="Right" type="StaticBody2D" parent="Walls" unique_id=218471002]
-position = Vector2(950, 270)
+position = Vector2(1269, 387)
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right" unique_id=1853430737]
@@ -93,12 +96,11 @@ position = Vector2(0, -138)
 texture = ExtResource("3_hnee1")
 
 [node name="Ball" type="CharacterBody2D" parent="." unique_id=1347679701]
-position = Vector2(480, 433)
-scale = Vector2(2, 2)
+position = Vector2(636, 487.00003)
+scale = Vector2(2.5, 2.5)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("2_01gq6")
-speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=1370062926]
 shape = SubResource("CircleShape2D_guh18")
@@ -132,10 +134,10 @@ theme_override_font_sizes/font_size = 24
 text = "PUNTAJE: 0"
 
 [node name="LivesLabel" type="Label" parent="UI" unique_id=735886106]
-offset_left = 820.0
+offset_left = 1107.0
 offset_top = 20.0
-offset_right = 879.0
-offset_bottom = 43.0
+offset_right = 1203.0
+offset_bottom = 54.0
 theme_override_font_sizes/font_size = 24
 text = "VIDAS: 3"
 
@@ -221,7 +223,8 @@ text = "Volver al Menu Principal"
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1966947369]
 z_index = -10
-position = Vector2(480, 270)
+position = Vector2(602, 344)
+scale = Vector2(1.41, 1.41)
 texture = ExtResource("9_8kbsk")
 
 [connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/RestartButton" to="Level" method="_on_restart_button_pressed"]
