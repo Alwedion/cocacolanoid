@@ -7,20 +7,20 @@ extends StaticBody2D
 @export var heavily_damaged_texture: Texture2D
 
 
-func hit() -> void:
+func hit(player_id: int) -> void:
 	hit_points -= 1
 
 	if hit_points <= 0:
-		destroy()
+		destroy(player_id)
 	else:
 		update_visual()
 
 
-func destroy() -> void:
+func destroy(player_id: int) -> void:
 	var level := get_parent()
 
 	if level.has_method("brick_destroyed"):
-		level.brick_destroyed(score_value)
+		level.brick_destroyed(score_value, player_id)
 
 	queue_free()
 

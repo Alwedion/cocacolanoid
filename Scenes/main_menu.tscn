@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://d4bjde7ucwt7i"]
+
+[ext_resource type="Script" uid="uid://lepda2gq4l3a" path="res://Scripts/main_menu.gd" id="1_28flt"]
+
+[node name="MainMenu" type="Control" unique_id=181240768]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_28flt")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=852788515]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=172370428]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=418634322]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "ARKANOID"
+horizontal_alignment = 1
+
+[node name="SinglePlayerButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1337610581]
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "Single Player"
+
+[node name="TwoPlayersButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=987215110]
+custom_minimum_size = Vector2(260, 54)
+layout_mode = 2
+text = "Two Players"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/SinglePlayerButton" to="." method="_on_single_player_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/TwoPlayersButton" to="." method="_on_two_players_button_pressed"]

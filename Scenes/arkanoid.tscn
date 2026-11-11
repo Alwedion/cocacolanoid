@@ -28,22 +28,40 @@ radius = 8.0
 
 [node name="Arkanoid" type="Node2D" unique_id=1074859914]
 
-[node name="Paddle" type="CharacterBody2D" parent="." unique_id=1818522318]
+[node name="Player1Paddle" type="CharacterBody2D" parent="." unique_id=1818522318]
 position = Vector2(480, 490)
+collision_layer = 4
 script = ExtResource("1_e3c5b")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle" unique_id=1882703488]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player1Paddle" unique_id=1882703488]
 shape = SubResource("RectangleShape2D_guh18")
 
-[node name="Sprite2D" type="Sprite2D" parent="Paddle" unique_id=1332949793]
+[node name="Sprite2D" type="Sprite2D" parent="Player1Paddle" unique_id=1332949793]
 position = Vector2(2.0000129, 11.999996)
 scale = Vector2(0.2727838, 0.22520524)
 texture = ExtResource("2_5y7lg")
 
+[node name="Player2Paddle" type="CharacterBody2D" parent="." unique_id=841086277]
+position = Vector2(475, 49)
+collision_layer = 4
+script = ExtResource("1_e3c5b")
+player_id = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player2Paddle" unique_id=1200410913]
+shape = SubResource("RectangleShape2D_guh18")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player2Paddle" unique_id=178539643]
+position = Vector2(-0.9999869, -12)
+scale = Vector2(0.2727838, 0.22520524)
+texture = ExtResource("2_5y7lg")
+flip_h = true
+flip_v = true
+
 [node name="Walls" type="Node2D" parent="." unique_id=699596688]
 
 [node name="Top" type="StaticBody2D" parent="Walls" unique_id=1681111755]
-position = Vector2(480, 10)
+position = Vector2(477, -217)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Top" unique_id=591146945]
 shape = SubResource("RectangleShape2D_djfhu")
@@ -54,6 +72,7 @@ texture = ExtResource("3_hnee1")
 
 [node name="Left" type="StaticBody2D" parent="Walls" unique_id=1876122777]
 position = Vector2(10, 270)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left" unique_id=674377675]
 shape = SubResource("RectangleShape2D_nccni")
@@ -64,6 +83,7 @@ texture = ExtResource("3_hnee1")
 
 [node name="Right" type="StaticBody2D" parent="Walls" unique_id=218471002]
 position = Vector2(950, 270)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right" unique_id=1853430737]
 shape = SubResource("RectangleShape2D_6l4ap")
@@ -73,9 +93,12 @@ position = Vector2(0, -138)
 texture = ExtResource("3_hnee1")
 
 [node name="Ball" type="CharacterBody2D" parent="." unique_id=1347679701]
-position = Vector2(480, 540)
+position = Vector2(480, 433)
 scale = Vector2(2, 2)
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("2_01gq6")
+speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=1370062926]
 shape = SubResource("CircleShape2D_guh18")
@@ -85,7 +108,8 @@ position = Vector2(3.0517578e-05, 0)
 scale = Vector2(0.036613304, 0.036613222)
 texture = ExtResource("3_3dowy")
 
-[node name="Level" type="Node2D" parent="." unique_id=1968133762 node_paths=PackedStringArray("score_label", "lives_label", "final_score_label", "game_over_panel")]
+[node name="Level" type="Node2D" parent="." unique_id=1968133762 node_paths=PackedStringArray("score_label", "lives_label", "final_score_label", "game_over_panel", "pause_menu_panel")]
+process_mode = 3
 script = ExtResource("3_ubs8n")
 normal_brick_scene = ExtResource("4_2se6l")
 medium_brick_scene = ExtResource("7_eitq0")
@@ -94,6 +118,8 @@ score_label = NodePath("../UI/ScoreLabel")
 lives_label = NodePath("../UI/LivesLabel")
 final_score_label = NodePath("../UI/GameOverPanel/VBoxContainer/FinalScoreLabel")
 game_over_panel = NodePath("../UI/GameOverPanel")
+start_y = 250.0
+pause_menu_panel = NodePath("../UI/PauseMenuPanel")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=2134908235]
 
@@ -151,9 +177,54 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "REINICIAR"
 
+[node name="PauseMenuPanel" type="Panel" parent="UI" unique_id=2093461340]
+process_mode = 2
+visible = false
+custom_minimum_size = Vector2(300, 250)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -125.0
+offset_right = 150.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseMenuPanel" unique_id=1942742421]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="UI/PauseMenuPanel/VBoxContainer" unique_id=1996875769]
+layout_mode = 2
+text = "PAUSADO"
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="UI/PauseMenuPanel/VBoxContainer" unique_id=1612503208]
+layout_mode = 2
+text = "Continuar"
+
+[node name="RestartButton" type="Button" parent="UI/PauseMenuPanel/VBoxContainer" unique_id=636848956]
+layout_mode = 2
+text = "Reiniciar"
+
+[node name="MainMenuButton" type="Button" parent="UI/PauseMenuPanel/VBoxContainer" unique_id=1554704343]
+layout_mode = 2
+text = "Volver al Menu Principal"
+
 [node name="Background" type="Sprite2D" parent="." unique_id=1966947369]
 z_index = -10
 position = Vector2(480, 270)
 texture = ExtResource("9_8kbsk")
 
 [connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/RestartButton" to="Level" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="UI/PauseMenuPanel/VBoxContainer/ResumeButton" to="Level" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="UI/PauseMenuPanel/VBoxContainer/RestartButton" to="Level" method="_on_restart_button_pressed"]
+[connection signal="pressed" from="UI/PauseMenuPanel/VBoxContainer/MainMenuButton" to="Level" method="_on_main_menu_button_pressed"]
