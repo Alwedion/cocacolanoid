@@ -16,6 +16,16 @@ extends Node2D
 @export var start_y := 100.0
 
 @export var pause_menu_panel: Control
+@export var double_ball_modifier_scene: PackedScene
+
+@export var modifier_spawn_area := Rect2(
+	Vector2(70, 130),
+	Vector2(820, 280)
+)
+
+@export var modifier_spawn_interval := 10.0
+
+var active_double_ball_modifier: Node2D
 
 var player1_score := 0
 var player2_score := 0
@@ -25,23 +35,37 @@ var player2_lives := 0
 var game_mode := "two_players"
 
 var bricks_remaining := 0
-var level_layout := [
-	[3, 3, 3, 3, 0, 0, 3, 3, 3, 3]
+var single_player_layout := [
+	[3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
+	[3, 2, 2, 2, 2, 2, 2, 2, 2, 3],
+	[2, 2, 1, 1, 1, 1, 1, 1, 2, 2],
+	[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
-#var level_layout := [
-	#[3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
-	#[3, 2, 2, 2, 2, 2, 2, 2, 2, 3],
-	#[3, 2, 1, 1, 1, 1, 1, 1, 2, 3],
-	#[2, 2, 1, 1, 1, 1, 1, 1, 2, 2],
-	#[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-#]
+
+var two_player_layout := [
+	[3, 3, 2, 2, 0, 0, 2, 2, 3, 3],
+	[3, 2, 2, 1, 0, 0, 1, 2, 2, 3],
+	[2, 2, 1, 1, 0, 0, 1, 1, 2, 2],
+	[2, 1, 1, 1, 0, 0, 1, 1, 1, 2],
+	[1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
+	[2, 1, 1, 1, 0, 0, 1, 1, 1, 2],
+	[3, 2, 2, 1, 0, 0, 1, 2, 2, 3]
+]
+
+@export var two_player_start_y := 160.0
 
 
 func _ready() -> void:
 	game_mode = str(
 		get_tree().root.get_meta("game_mode", "two_players")
 	)
+	var top_wall := get_node_or_null("../Walls/Top")
 
+	if top_wall:
+		if game_mode == "single_player":
+			top_wall.position.y = 10.0
+		else:
+			top_wall.position.y = -217.0
 	player1_lives = starting_lives
 
 	if game_mode == "two_players":
@@ -63,7 +87,7 @@ func _ready() -> void:
 	update_score_display()
 	update_lives_display()
 	create_bricks()
-
+	start_modifier_spawning()
 
 func update_score_display() -> void:
 	if score_label:
@@ -81,8 +105,18 @@ func update_lives_display() -> void:
 			lives_label.text = "P1: " + str(player1_lives) + " | P2: " + str(player2_lives)
 
 func create_bricks() -> void:
-	var rows: int = level_layout.size()
-	var columns: int = level_layout[0].size()
+	var selected_layout: Array
+
+	var layout_start_y := start_y
+
+	if game_mode == "single_player":
+		selected_layout = single_player_layout
+	else:
+		selected_layout = two_player_layout
+		layout_start_y = two_player_start_y
+
+	var rows: int = selected_layout.size()
+	var columns: int = selected_layout[0].size()
 
 	var total_width := (
 		columns * brick_size.x
@@ -93,11 +127,10 @@ func create_bricks() -> void:
 		960.0 - total_width
 	) / 2.0 + brick_size.x / 2.0
 
-	for row in rows:
-		for column in columns:
-			var brick_type: int = level_layout[row][column]
+	for row in range(rows):
+		for column in range(columns):
+			var brick_type: int = selected_layout[row][column]
 
-			# 0 means no brick.
 			if brick_type == 0:
 				continue
 
@@ -106,13 +139,10 @@ func create_bricks() -> void:
 			match brick_type:
 				1:
 					brick_scene = normal_brick_scene
-
 				2:
 					brick_scene = medium_brick_scene
-
 				3:
 					brick_scene = hard_brick_scene
-
 				_:
 					continue
 
@@ -122,11 +152,10 @@ func create_bricks() -> void:
 
 			brick.position = Vector2(
 				start_x + column * (brick_size.x + spacing.x),
-				start_y + row * (brick_size.y + spacing.y)
+				layout_start_y + row * (brick_size.y + spacing.y)
 			)
 
 			bricks_remaining += 1
-
 
 func brick_destroyed(score_value: int, player_id: int) -> void:
 	bricks_remaining -= 1
@@ -153,7 +182,7 @@ func level_complete() -> void:
 func ball_lost(player_id: int) -> void:
 	if player_id == 1:
 		player1_lives -= 1
-	else:
+	elif player_id == 2:
 		player2_lives -= 1
 
 	update_lives_display()
@@ -161,37 +190,50 @@ func ball_lost(player_id: int) -> void:
 	print("Player 1 lives: ", player1_lives)
 	print("Player 2 lives: ", player2_lives)
 
-	if player1_lives <= 0 or player2_lives <= 0:
-		if player1_score > player2_score:
-			game_over(1)
-		elif player2_score > player1_score:
-			game_over(2)
-		else:
+	if game_mode == "single_player":
+		if player1_lives <= 0:
 			game_over(0)
+	else:
+		if player1_lives <= 0 or player2_lives <= 0:
+			if player1_score > player2_score:
+				game_over(1)
+			elif player2_score > player1_score:
+				game_over(2)
+			else:
+				game_over(0)
 
 func game_over(winner_id: int) -> void:
-	if winner_id == 0:
-		print("IT'S A DRAW!")
-	else:
-		print("PLAYER ", winner_id, " WINS!")
+	if game_mode == "single_player":
+		print("GAME OVER!")
 
-	if final_score_label:
+		if final_score_label:
+			final_score_label.text = (
+                "GAME OVER!\n"
+				+ "Final Score: " + str(player1_score)
+			)
+
+	else:
 		if winner_id == 0:
-			final_score_label.text = (
-				"IT'S A DRAW!\n"
-				+ "P1 Score: " + str(player1_score) + "\n"
-				+ "P2 Score: " + str(player2_score)
-			)
+			print("IT'S A DRAW!")
 		else:
-			final_score_label.text = (
-				"PLAYER " + str(winner_id) + " WINS!\n"
-				+ "P1 Score: " + str(player1_score) + "\n"
-				+ "P2 Score: " + str(player2_score)
-			)
+			print("PLAYER ", winner_id, " WINS!")
+
+		if final_score_label:
+			if winner_id == 0:
+				final_score_label.text = (
+                    "IT'S A DRAW!\n"
+					+ "P1 Score: " + str(player1_score) + "\n"
+					+ "P2 Score: " + str(player2_score)
+				)
+			else:
+				final_score_label.text = (
+					"PLAYER " + str(winner_id) + " WINS!\n"
+					+ "P1 Score: " + str(player1_score) + "\n"
+					+ "P2 Score: " + str(player2_score)
+				)
 
 	if game_over_panel:
 		game_over_panel.visible = true
-
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
@@ -220,3 +262,38 @@ func _on_restart_button_pressed() -> void:
 func _on_main_menu_button_pressed() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
+
+func start_modifier_spawning() -> void:
+	var timer := Timer.new()
+	timer.wait_time = modifier_spawn_interval
+	timer.timeout.connect(spawn_double_ball_modifier)
+
+	add_child(timer)
+	timer.start()
+
+
+func spawn_double_ball_modifier() -> void:
+	# Don't spawn another if one is already active.
+	if is_instance_valid(active_double_ball_modifier):
+		return
+
+	if double_ball_modifier_scene == null:
+		return
+
+	var modifier := double_ball_modifier_scene.instantiate() as Node2D
+
+	add_child(modifier)
+
+	var random_position := Vector2(
+		randf_range(
+			modifier_spawn_area.position.x,
+			modifier_spawn_area.end.x
+		),
+		randf_range(
+			modifier_spawn_area.position.y,
+			modifier_spawn_area.end.y
+		)
+	)
+
+	modifier.global_position = random_position
+	active_double_ball_modifier = modifier

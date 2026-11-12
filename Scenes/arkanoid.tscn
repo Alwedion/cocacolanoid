@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://djsp6vw4iccjg" path="res://Scenes/MediumBrick.tscn" id="7_eitq0"]
 [ext_resource type="PackedScene" uid="uid://polre3xwjht4" path="res://Scenes/HardBrick.tscn" id="8_8kbsk"]
 [ext_resource type="Texture2D" uid="uid://b73vyy2y6tmji" path="res://Assets/christmas-village-in-the-mountains-8458822_960_720.jpg" id="9_8kbsk"]
+[ext_resource type="PackedScene" uid="uid://bhi0uwd62pvlu" path="res://Scenes/double_ball.tscn" id="11_d26ff"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_guh18"]
 size = Vector2(120, 20)
@@ -98,7 +99,6 @@ scale = Vector2(2, 2)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("2_01gq6")
-speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=1370062926]
 shape = SubResource("CircleShape2D_guh18")
@@ -118,8 +118,9 @@ score_label = NodePath("../UI/ScoreLabel")
 lives_label = NodePath("../UI/LivesLabel")
 final_score_label = NodePath("../UI/GameOverPanel/VBoxContainer/FinalScoreLabel")
 game_over_panel = NodePath("../UI/GameOverPanel")
-start_y = 250.0
 pause_menu_panel = NodePath("../UI/PauseMenuPanel")
+double_ball_modifier_scene = ExtResource("11_d26ff")
+modifier_spawn_interval = 7.0
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=2134908235]
 

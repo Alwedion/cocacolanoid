@@ -36,9 +36,12 @@ func _physics_process(delta: float) -> void:
 
 	if collision:
 		var collider := collision.get_collider()
-
 		if collider.is_in_group("brick"):
 			collider.hit(last_player_id)
+			velocity = velocity.bounce(collision.get_normal()).normalized() * speed
+
+		elif collider.is_in_group("double_ball_modifier"):
+			collider.activate(self)
 			velocity = velocity.bounce(collision.get_normal()).normalized() * speed
 
 		elif collider.is_in_group("paddle"):
