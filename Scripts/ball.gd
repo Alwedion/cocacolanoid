@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed := 350.0
+@export var speed := 700.0
 
 var launched := false
 var last_player_id := 0
@@ -14,18 +14,18 @@ func _process(_delta: float) -> void:
 	)
 
 	# Player 1 loses the ball at the bottom.
-	if global_position.y > 560.0:
+	if global_position.y > 1120.0:
 		print("Player 1 missed!")
 		ball_lost(1)
 
 	# Only check the top boundary in two-player mode.
-	elif game_mode == "two_players" and global_position.y < -20.0:
+	elif game_mode == "two_players" and global_position.y < -40.0:
 		print("Player 2 missed!")
 		ball_lost(2)
 		
 func _physics_process(delta: float) -> void:
 	if not launched:
-		global_position = Vector2(480, 462)
+		global_position = Vector2(960, 924)
 
 		if Input.is_action_just_pressed("ui_accept"):
 			launched = true
@@ -54,7 +54,7 @@ func _physics_process(delta: float) -> void:
 func bounce_from_paddle(paddle: CharacterBody2D) -> void:
 	last_player_id = paddle.player_id
 	print("Last hit by Player: ", last_player_id)
-	var paddle_width := 120.0
+	var paddle_width := 240.0
 
 	# How far from the center did the ball hit?
 	var hit_position := global_position.x - paddle.global_position.x

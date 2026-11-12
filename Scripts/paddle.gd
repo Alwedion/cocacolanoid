@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed := 500.0
+@export var speed := 1000.0
 @export var player_id := 1
 
 func _ready() -> void:

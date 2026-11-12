@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cg5miefqyyr1p" path="res://Assets/Hard Block.png" id="4_0umj0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pn5wc"]
-size = Vector2(70, 20)
+size = Vector2(140, 40)
 
 [node name="Brick" type="StaticBody2D" unique_id=1556933038 groups=["brick"]]
 script = ExtResource("1_qwbei")
@@ -20,5 +20,5 @@ shape = SubResource("RectangleShape2D_pn5wc")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=98275679]
 position = Vector2(1.1920929e-07, 0)
-scale = Vector2(0.016203703, 0.020833332)
+scale = Vector2(0.032407406, 0.041666664)
 texture = ExtResource("4_0umj0")

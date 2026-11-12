@@ -11,16 +11,16 @@ extends Node2D
 
 @export var starting_lives := 3
 
-@export var brick_size := Vector2(70.0, 20.0)
-@export var spacing := Vector2(5.0, 5.0)
-@export var start_y := 100.0
+@export var brick_size := Vector2(140.0, 40.0)
+@export var spacing := Vector2(10.0, 10.0)
+@export var start_y := 200.0
 
 @export var pause_menu_panel: Control
 @export var double_ball_modifier_scene: PackedScene
 
 @export var modifier_spawn_area := Rect2(
-	Vector2(70, 130),
-	Vector2(820, 280)
+	Vector2(140, 260),
+	Vector2(1640, 560)
 )
 
 @export var modifier_spawn_interval := 10.0
@@ -52,7 +52,7 @@ var two_player_layout := [
 	[3, 2, 2, 1, 0, 0, 1, 2, 2, 3]
 ]
 
-@export var two_player_start_y := 160.0
+@export var two_player_start_y := 320.0
 
 
 func _ready() -> void:
@@ -63,9 +63,9 @@ func _ready() -> void:
 
 	if top_wall:
 		if game_mode == "single_player":
-			top_wall.position.y = 10.0
+			top_wall.position.y = 20.0
 		else:
-			top_wall.position.y = -217.0
+			top_wall.position.y = -434.0
 	player1_lives = starting_lives
 
 	if game_mode == "two_players":
@@ -124,7 +124,7 @@ func create_bricks() -> void:
 	)
 
 	var start_x := (
-		960.0 - total_width
+		1920.0 - total_width
 	) / 2.0 + brick_size.x / 2.0
 
 	for row in range(rows):

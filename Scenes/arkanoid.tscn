@@ -13,16 +13,16 @@
 [ext_resource type="PackedScene" uid="uid://bhi0uwd62pvlu" path="res://Scenes/double_ball.tscn" id="11_d26ff"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_guh18"]
-size = Vector2(120, 20)
+size = Vector2(240, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_djfhu"]
-size = Vector2(960, 20)
+size = Vector2(1920, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nccni"]
-size = Vector2(20, 540)
+size = Vector2(40, 1080)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6l4ap"]
-size = Vector2(20, 540)
+size = Vector2(40, 1080)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_guh18"]
 radius = 8.0
@@ -30,7 +30,7 @@ radius = 8.0
 [node name="Arkanoid" type="Node2D" unique_id=1074859914]
 
 [node name="Player1Paddle" type="CharacterBody2D" parent="." unique_id=1818522318]
-position = Vector2(480, 490)
+position = Vector2(960, 980)
 collision_layer = 4
 script = ExtResource("1_e3c5b")
 
@@ -38,12 +38,12 @@ script = ExtResource("1_e3c5b")
 shape = SubResource("RectangleShape2D_guh18")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player1Paddle" unique_id=1332949793]
-position = Vector2(2.0000129, 11.999996)
-scale = Vector2(0.2727838, 0.22520524)
+position = Vector2(4, 24)
+scale = Vector2(0.5455676, 0.45041048)
 texture = ExtResource("2_5y7lg")
 
 [node name="Player2Paddle" type="CharacterBody2D" parent="." unique_id=841086277]
-position = Vector2(475, 49)
+position = Vector2(950, 98)
 collision_layer = 4
 script = ExtResource("1_e3c5b")
 player_id = 2
@@ -52,8 +52,8 @@ player_id = 2
 shape = SubResource("RectangleShape2D_guh18")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player2Paddle" unique_id=178539643]
-position = Vector2(-0.9999869, -12)
-scale = Vector2(0.2727838, 0.22520524)
+position = Vector2(-2, -24)
+scale = Vector2(0.5455676, 0.45041048)
 texture = ExtResource("2_5y7lg")
 flip_h = true
 flip_v = true
@@ -61,7 +61,7 @@ flip_v = true
 [node name="Walls" type="Node2D" parent="." unique_id=699596688]
 
 [node name="Top" type="StaticBody2D" parent="Walls" unique_id=1681111755]
-position = Vector2(477, -217)
+position = Vector2(954, -434)
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Top" unique_id=591146945]
@@ -69,33 +69,36 @@ shape = SubResource("RectangleShape2D_djfhu")
 
 [node name="Sprite2D" type="Sprite2D" parent="Walls/Top" unique_id=1106856901]
 rotation = 1.5707964
+scale = Vector2(2, 2)
 texture = ExtResource("3_hnee1")
 
 [node name="Left" type="StaticBody2D" parent="Walls" unique_id=1876122777]
-position = Vector2(10, 270)
+position = Vector2(20, 540)
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left" unique_id=674377675]
 shape = SubResource("RectangleShape2D_nccni")
 
 [node name="Sprite2D" type="Sprite2D" parent="Walls/Left" unique_id=103057302]
-position = Vector2(0, -138)
+position = Vector2(0, -276)
+scale = Vector2(2, 2)
 texture = ExtResource("3_hnee1")
 
 [node name="Right" type="StaticBody2D" parent="Walls" unique_id=218471002]
-position = Vector2(950, 270)
+position = Vector2(1900, 540)
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right" unique_id=1853430737]
 shape = SubResource("RectangleShape2D_6l4ap")
 
 [node name="Sprite2D" type="Sprite2D" parent="Walls/Right" unique_id=482422705]
-position = Vector2(0, -138)
+position = Vector2(0, -276)
+scale = Vector2(2, 2)
 texture = ExtResource("3_hnee1")
 
 [node name="Ball" type="CharacterBody2D" parent="." unique_id=1347679701]
-position = Vector2(480, 433)
-scale = Vector2(2, 2)
+position = Vector2(960, 866)
+scale = Vector2(4, 4)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("2_01gq6")
@@ -125,20 +128,25 @@ modifier_spawn_interval = 7.0
 [node name="UI" type="CanvasLayer" parent="." unique_id=2134908235]
 
 [node name="ScoreLabel" type="Label" parent="UI" unique_id=254017388]
-offset_left = 30.0
-offset_top = 20.0
-offset_right = 99.0
-offset_bottom = 43.0
-theme_override_font_sizes/font_size = 24
+offset_left = 60.0
+offset_top = 40.0
+offset_right = 198.0
+offset_bottom = 86.0
+theme_override_font_sizes/font_size = 48
 text = "PUNTAJE: 0"
 
 [node name="LivesLabel" type="Label" parent="UI" unique_id=735886106]
-offset_left = 820.0
-offset_top = 20.0
-offset_right = 879.0
-offset_bottom = 43.0
-theme_override_font_sizes/font_size = 24
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -460.0
+offset_top = 40.0
+offset_right = -60.0
+offset_bottom = 86.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 48
 text = "VIDAS: 3"
+horizontal_alignment = 2
 
 [node name="GameOverPanel" type="Panel" parent="UI" unique_id=529794973]
 visible = false
@@ -147,10 +155,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -175.0
-offset_top = -110.0
-offset_right = 175.0
-offset_bottom = 110.0
+offset_left = -350.0
+offset_top = -220.0
+offset_right = 350.0
+offset_bottom = 220.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -161,36 +169,39 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 30
 alignment = 1
 
 [node name="TitleLabel" type="Label" parent="UI/GameOverPanel/VBoxContainer" unique_id=275808741]
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "GAME OVER"
 horizontal_alignment = 1
 
 [node name="FinalScoreLabel" type="Label" parent="UI/GameOverPanel/VBoxContainer" unique_id=1083561388]
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "PUNTAJE: 0"
 horizontal_alignment = 1
 
 [node name="RestartButton" type="Button" parent="UI/GameOverPanel/VBoxContainer" unique_id=70309281]
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "REINICIAR"
 
 [node name="PauseMenuPanel" type="Panel" parent="UI" unique_id=2093461340]
 process_mode = 2
 visible = false
-custom_minimum_size = Vector2(300, 250)
+custom_minimum_size = Vector2(600, 500)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -125.0
-offset_right = 150.0
-offset_bottom = 125.0
+offset_left = -300.0
+offset_top = -250.0
+offset_right = 300.0
+offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -201,28 +212,33 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 24
 
 [node name="TitleLabel" type="Label" parent="UI/PauseMenuPanel/VBoxContainer" unique_id=1996875769]
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "PAUSADO"
 horizontal_alignment = 1
 
 [node name="ResumeButton" type="Button" parent="UI/PauseMenuPanel/VBoxContainer" unique_id=1612503208]
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "Continuar"
 
 [node name="RestartButton" type="Button" parent="UI/PauseMenuPanel/VBoxContainer" unique_id=636848956]
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "Reiniciar"
 
 [node name="MainMenuButton" type="Button" parent="UI/PauseMenuPanel/VBoxContainer" unique_id=1554704343]
 layout_mode = 2
+theme_override_font_sizes/font_size = 32
 text = "Volver al Menu Principal"
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1966947369]
 z_index = -10
-position = Vector2(480, 270)
+position = Vector2(960, 540)
+scale = Vector2(2, 2)
 texture = ExtResource("9_8kbsk")
 
 [connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/RestartButton" to="Level" method="_on_restart_button_pressed"]
